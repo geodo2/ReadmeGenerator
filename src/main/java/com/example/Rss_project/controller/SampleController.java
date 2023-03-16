@@ -176,7 +176,7 @@ public class SampleController {
 
         System.out.println("업로드된 zip파일, 압축풀기한 파일들 모두 삭제 완료!!");
     }
-    @PostMapping("/readme")
+    @PostMapping("/readmed")
     public String saveReadmeData(@RequestBody Map<String, Object> requestData) {
         String userName = (String) requestData.get("userName");
         String repositoryName = (String) requestData.get("repositoryName");
@@ -231,7 +231,55 @@ public class SampleController {
                         "\u200B\n" +temp;
         return sample_Data;
     }
-
+    //data 테이블저장하는 테스트
+    @GetMapping("/readme/{template}")
+    public String saveData() {
+        TemplateDTO templateDTO = templateService.getTemplate("test1");
+        TemplateDTO savetemplateDTO = templateService.saveTemplate("123","abc");
+        System.out.println(savetemplateDTO+"check Dto data");
+        String temp=templateDTO.getTemplateContributor();
+        String sample_Data=
+                "![header](https://capsule-render.vercel.app/api?type=Waving&color=auto&height=300&section=header&text=Readme%20Studio&fontSize=90)\n" +
+                        "<div align=center><h1>\uD83D\uDCDA  STACKS</h1></div>\n" +
+                        "<div align=center> \n" +
+                        "  <img src=\"https://img.shields.io/badge/Spring-007396?style=for-the-badge&logo=Spring&logoColor=white\">\n" +
+                        "  <br>\n" +
+                        "  \n" +
+                        "\u200B\n" +
+                        "</div>\n" +
+                        "\u200B\n" +
+                        "## :one: 소개\n" +
+                        "  이 프로젝트는 Readme Studio 서비스로  Spring Boot로 제작된 프로젝트입니다.\n" +
+                        "## :two: 패키지 프레임워크 설치\n" +
+                        "\u200B\n" +
+                        "<b>clone 프로젝트 </b>\n" +
+                        "```xml\n" +
+                        "gh repo clone https://soominkiminsoo/SurveyForm1.git\n" +
+                        "```\n" +
+                        " <b>jar 파일 다운로드</b>\n" +
+                        "* mysql-connector-j-8.0.31.jar\n" +
+                        "* mail-1.4.7.jar\n" +
+                        "* activation.jar\n" +
+                        "   \n" +
+                        "\u200B\n" +
+                        "## :three:DB 구조\n" +
+                        "C:.<br>\n" +
+                        "├─dao<br>\n" +
+                        "│    └─Impl<br>\n" +
+                        "├─dto<br>\n" +
+                        "├─entity<br>\n" +
+                        "├─handler<br>\n" +
+                        "│    └─Impl<br>\n" +
+                        "├─repository<br>\n" +
+                        "└─service<br>\n" +
+                        "       └─Impl<br>\n" +
+                        "\u200B\n" +
+                        "## :four:쿼리 메소드\n" +
+                        "\u200B\n" +
+                        "## :five:Contributor\n" +
+                        "\u200B\n" +temp;
+        return sample_Data;
+    }
 
 
 }
