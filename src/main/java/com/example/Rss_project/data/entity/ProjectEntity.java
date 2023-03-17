@@ -17,7 +17,9 @@ import lombok.*;
 public class ProjectEntity {
     @Id
     String id;
+    @Id
     String file_name;
+    @Id
     String file_path;
     String file_content;
     public ProjectDTO toDto(){

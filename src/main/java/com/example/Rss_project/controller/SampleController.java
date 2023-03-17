@@ -2,6 +2,7 @@
 package com.example.Rss_project.controller;
 import com.example.Rss_project.data.dto.TemplateDTO;
 import com.example.Rss_project.data.service.TemplateService;
+import com.example.Rss_project.data.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 
+
 @RestController
 
 public class SampleController {
     private TemplateService templateService;
-
+    private UserService userService;
     @Autowired
     public SampleController(TemplateService templateService) {
         this.templateService = templateService;
@@ -236,6 +238,7 @@ public class SampleController {
     public String saveData() {
         TemplateDTO templateDTO = templateService.getTemplate("test1");
         TemplateDTO savetemplateDTO = templateService.saveTemplate("123","abc");
+
         System.out.println(savetemplateDTO+"check Dto data");
         String temp=templateDTO.getTemplateContributor();
         String sample_Data=
