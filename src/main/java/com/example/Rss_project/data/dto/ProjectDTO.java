@@ -1,7 +1,6 @@
 package com.example.Rss_project.data.dto;
-import com.example.Rss_project.data.entity.ProjectEntity;
 
-import jakarta.validation.constraints.NotNull;
+import com.example.Rss_project.data.entity.ProjectEntity;
 import lombok.*;
 
 @Data
@@ -17,10 +16,10 @@ public class ProjectDTO {
 
     public ProjectEntity toEntity(){
         return ProjectEntity.builder()
-                .id(id)
-                .file_name(file_name)
-                .file_path(file_path)
-                .file_content(file_content)
-                .build();
+            .id(id)
+            .file_name(file_name)
+            .file_path(file_path)
+            .file_content(file_content)
+            .build();
     }
 }

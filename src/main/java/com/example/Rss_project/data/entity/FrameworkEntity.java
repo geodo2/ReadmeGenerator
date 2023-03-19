@@ -4,7 +4,12 @@ import com.example.Rss_project.data.dto.FrameworkDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -22,9 +27,9 @@ public class FrameworkEntity {
 
     public FrameworkDTO toDto(){
         return FrameworkDTO.builder()
-                .id(id)
-                .name(name)
-                .content(content)
-                .build();
+            .id(id)
+            .name(name)
+            .content(content)
+            .build();
     }
 }

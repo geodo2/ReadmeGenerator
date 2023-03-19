@@ -1,8 +1,12 @@
 package com.example.Rss_project.data.dto;
-import com.example.Rss_project.data.entity.FrameworkEntity;
 
+import com.example.Rss_project.data.entity.FrameworkEntity;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -18,10 +22,10 @@ public class FrameworkDTO {
 
     public FrameworkEntity toEntity(){
         return FrameworkEntity.builder()
-                .id(id)
-                .name(name)
-                .content(content)
-                .build();
+            .id(id)
+            .name(name)
+            .content(content)
+            .build();
 
     }
 }

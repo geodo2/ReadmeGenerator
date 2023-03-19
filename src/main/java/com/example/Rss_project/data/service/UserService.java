@@ -1,4 +1,5 @@
 package com.example.Rss_project.data.service;
+
 import com.example.Rss_project.data.dto.UserDTO;
 
 public interface UserService {

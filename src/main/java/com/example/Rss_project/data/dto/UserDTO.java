@@ -1,8 +1,12 @@
 package com.example.Rss_project.data.dto;
-import com.example.Rss_project.data.entity.UserEntity;
 
+import com.example.Rss_project.data.entity.UserEntity;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -18,9 +22,9 @@ public class UserDTO {
 
     public UserEntity toEntity(){
         return UserEntity.builder()
-                .project_id(project_id)
-                .user_name(user_name)
-                .repository_name(repository_name)
-                .build();
+            .project_id(project_id)
+            .user_name(user_name)
+            .repository_name(repository_name)
+            .build();
     }
 }

@@ -3,8 +3,15 @@ package com.example.Rss_project.data.entity;
 import com.example.Rss_project.data.dto.UserDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -15,6 +22,10 @@ import lombok.*;
 @ToString
 @Table(name = "User")
 public class UserEntity {
+//    @Id
+//    @JoinColumn(name = "project_id", referencedColumnName = "id") // fk 설정할 때 사용
+//    ProjectEntity project_id;
+
     @Id
     String project_id;
     String user_name;
@@ -22,9 +33,9 @@ public class UserEntity {
 
     public UserDTO toDto(){
         return UserDTO.builder()
-                .project_id(project_id)
-                .user_name(user_name)
-                .repository_name(repository_name)
-                .build();
+            .project_id(project_id)
+            .user_name(user_name)
+            .repository_name(repository_name)
+            .build();
     }
 }
