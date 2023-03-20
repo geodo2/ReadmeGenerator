@@ -27,11 +27,13 @@ public class FrameworkServiceImpl implements FrameworkService {
     }
 
     @Override
-    public FrameworkDTO getFramework(String id){
-        FrameworkEntity frameworkEntity = frameworkHandeler.getFrameworkEntity(id);
+    public FrameworkDTO getFramework(String name){
+        FrameworkEntity frameworkEntity = frameworkHandeler.getFrameworkEntity(name);
 
         FrameworkDTO frameworkDTO = new FrameworkDTO(frameworkEntity.getId(), frameworkEntity.getName(), frameworkEntity.getContent());
         return frameworkDTO;
     }
+
+
 
 }

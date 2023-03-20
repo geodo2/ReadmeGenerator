@@ -6,9 +6,12 @@ import com.example.Rss_project.data.repository.FrameworkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FrameworkDAOImpl implements FrameworkDAO {
     FrameworkRepository frameworkRepository;
+
 
     @Autowired
     public FrameworkDAOImpl(FrameworkRepository frameworkRepository){
@@ -26,4 +29,7 @@ public class FrameworkDAOImpl implements FrameworkDAO {
         FrameworkEntity frameworkEntity = frameworkRepository.getReferenceById(id);
         return frameworkEntity;
     }
+
+
+
 }

@@ -5,6 +5,6 @@ import com.example.Rss_project.data.entity.FrameworkEntity;
 public interface FrameworkHandler {
     FrameworkEntity saveFrameworkEntity(String id, String name, String content);
 
-    FrameworkEntity getFrameworkEntity(String id);
+    FrameworkEntity getFrameworkEntity(String name);
 
 }

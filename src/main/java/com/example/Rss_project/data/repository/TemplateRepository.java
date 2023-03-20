@@ -9,5 +9,4 @@ import com.example.Rss_project.data.entity.TemplateEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TemplateRepository extends JpaRepository<TemplateEntity, String> {
- // <(Repository가 사용할 entity), (entity에서 사용되는 primary key의 데이터 타입)>
 }

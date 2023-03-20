@@ -1,12 +1,20 @@
 
 package com.example.Rss_project.controller;
+import com.example.Rss_project.data.dto.FrameworkDTO;
 import com.example.Rss_project.data.dto.TemplateDTO;
+import com.example.Rss_project.data.dto.UserDTO;
+import com.example.Rss_project.data.repository.FrameworkRepository;
+import com.example.Rss_project.data.repository.ProjectRepository;
+import com.example.Rss_project.data.service.FrameworkService;
+import com.example.Rss_project.data.service.ProjectService;
 import com.example.Rss_project.data.service.TemplateService;
 import com.example.Rss_project.data.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.*;
 import java.util.Map;
 
 import java.io.BufferedReader;
@@ -32,15 +40,24 @@ import org.springframework.web.multipart.MultipartFile;
 public class SampleController {
     private TemplateService templateService;
     private UserService userService;
+    private FrameworkService frameworkService;
+    static String frame_content = "";
+    private FrameworkRepository frameworkRepository;
+
     @Autowired
-    public SampleController(TemplateService templateService) {
+    public SampleController(TemplateService templateService, FrameworkService frameworkService, UserService userService, ProjectRepository projectRepository, FrameworkRepository frameworkRepository) {
         this.templateService = templateService;
+        this.userService = userService;
+        this.frameworkService = frameworkService;
+        this.frameworkRepository = frameworkRepository;
     }
+
+
     public static String fileName = "";
     static String findURL = "";
     static String findURL_format = "";
     static String content = "";
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @PostMapping(value = "/re")
     public String getFileData(@RequestParam("jsonParam1") String jsonParam1,
                               @RequestParam("jsonParam2") String jsonParam2, @RequestParam("file") MultipartFile file)
@@ -65,7 +82,7 @@ public class SampleController {
         File dirFile = new File("./unzipFiles");
         File[] fileList = dirFile.listFiles();
 
-        if(fileList.length != 0){ // 기존에 압축풀기한 파일들이 존재하면 기존 파일들 삭제하고 시작
+        if (fileList.length != 0) { // 기존에 압축풀기한 파일들이 존재하면 기존 파일들 삭제하고 시작
             System.out.println("기존 파일들 존재! 삭제하고 시작!");
             deleteUnzipFiles(builder);
         }
@@ -111,11 +128,11 @@ public class SampleController {
         File dirFile = new File(searchDirPath);
         File[] fileList = dirFile.listFiles();
 
-        if(fileList.length == 0){ // 압축풀기가 되지 않은 상태
+        if (fileList.length == 0) { // 압축풀기가 되지 않은 상태
             System.out.println("!!! 압축풀기할 파일이 존재하지 않습니다 !!!");
-        } else{
-            for(int i = 0 ; i < fileList.length; i++) {
-                if(fileList[i].isFile()) {
+        } else {
+            for (int i = 0; i < fileList.length; i++) {
+                if (fileList[i].isFile()) {
                     System.out.println(fileList[i].getPath()); // Full Path
                     Scanner reader = new Scanner(new File(fileList[i].getPath()));
 
@@ -159,7 +176,7 @@ public class SampleController {
                             */
                         }
                     }
-                } else if(fileList[i].isDirectory()) {
+                } else if (fileList[i].isDirectory()) {
                     searchFiles(fileList[i].getPath());  // 재귀함수 호출
                 }
             }
@@ -178,7 +195,9 @@ public class SampleController {
 
         System.out.println("업로드된 zip파일, 압축풀기한 파일들 모두 삭제 완료!!");
     }
-    @PostMapping("/readmed")
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/readme")
     public String saveReadmeData(@RequestBody Map<String, Object> requestData) {
         String userName = (String) requestData.get("userName");
         String repositoryName = (String) requestData.get("repositoryName");
@@ -186,12 +205,13 @@ public class SampleController {
         System.out.println(userName);
         System.out.println(repositoryName);
         TemplateDTO templateDTO = templateService.getTemplate("test1");
-        TemplateDTO savetemplateDTO = templateService.saveTemplate("123","abc");
+        TemplateDTO savetemplateDTO = templateService.saveTemplate("123", "abc");
 
-        String temp=templateDTO.getTemplateContributor();
-        temp= temp.replace("repositoryName",repositoryName);
-        temp= temp.replace("userName",userName);
-        String sample_Data=
+
+        String temp = templateDTO.getTemplateContributor();
+        temp = temp.replace("repositoryName", repositoryName);
+        temp = temp.replace("userName", userName);
+        String sample_Data =
                 "![header](https://capsule-render.vercel.app/api?type=Waving&color=auto&height=300&section=header&text=Readme%20Studio&fontSize=90)\n" +
                         "<div align=center><h1>\uD83D\uDCDA  STACKS</h1></div>\n" +
                         "<div align=center> \n" +
@@ -230,18 +250,28 @@ public class SampleController {
                         "## :four:쿼리 메소드\n" +
                         "\u200B\n" +
                         "## :five:Contributor\n" +
-                        "\u200B\n" +temp;
+                        "\u200B\n" + temp;
         return sample_Data;
     }
+
     //data 테이블저장하는 테스트
-    @GetMapping("/readme/{template}")
+    @GetMapping("/test_db/{template}")
     public String saveData() {
-        TemplateDTO templateDTO = templateService.getTemplate("test1");
-        TemplateDTO savetemplateDTO = templateService.saveTemplate("123","abc");
+        // 여기서 사용자가 누구인지 index값으로 알아내기
+        UserDTO userDTO = userService.getUser("1");
+        String user_name = userDTO.getUser_name();
+        String repo_name = userDTO.getRepository_name();
+        System.out.println(user_name + repo_name + "Test DB");
+        //framework_id에 따른 content제공
+        String Contributors = "contributor";
+        frame_content = frameworkRepository.findcontent(Contributors);
+        System.out.println(frame_content + "frame content가 제대로 들어왔는지 확인");
+        //framework_id가 헤더에 관한 content
+        String header = "header";
+        frame_content = frameworkRepository.findcontent(header);
+        System.out.println(frame_content + "frame content가 제대로 들어왔는지 확인");
 
-        System.out.println(savetemplateDTO+"check Dto data");
-        String temp=templateDTO.getTemplateContributor();
-        String sample_Data=
+        String sample_Data =
                 "![header](https://capsule-render.vercel.app/api?type=Waving&color=auto&height=300&section=header&text=Readme%20Studio&fontSize=90)\n" +
                         "<div align=center><h1>\uD83D\uDCDA  STACKS</h1></div>\n" +
                         "<div align=center> \n" +
@@ -280,9 +310,35 @@ public class SampleController {
                         "## :four:쿼리 메소드\n" +
                         "\u200B\n" +
                         "## :five:Contributor\n" +
-                        "\u200B\n" +temp;
+                        "\u200B\n";
         return sample_Data;
     }
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/testing")
+    public String saveData(@RequestParam("index") String index,
+                           @RequestParam("template_id") String templateId) {
+        // 여기서 사용자가 누구인지 index값으로 알아내기
 
+        System.out.println(index+templateId+"파라미터 체크");
+        UserDTO userDTO = userService.getUser("1");
+        String user_name = userDTO.getUser_name();
+        String repo_name = userDTO.getRepository_name();
+        System.out.println(user_name + repo_name + "Test DB");
+        // framework_id에 따른 content제공
+       // if(templateId=="Contributor"){
+            String Contributors = "contributor";
+            String frame_content = frameworkRepository.findcontent(Contributors);
+            System.out.println(frame_content + "frame content가 제대로 들어왔는지 확인");
+            frame_content = frame_content.replace("repositoryName", user_name);
+            frame_content = frame_content.replace("userName", repo_name);
 
+            /* header 값에 대한 framework
+          } else if (templateId=="Header") {
+            String Header = "Header";
+            String frame_content = frameworkRepository.findcontent(Header);
+            frame_content=frame_content.replace("repoName",repo_name);
+        }
+        */
+        return frame_content;
+    }
 }

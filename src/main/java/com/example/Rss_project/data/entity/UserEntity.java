@@ -33,9 +33,9 @@ public class UserEntity {
 
     public UserDTO toDto(){
         return UserDTO.builder()
-            .project_id(project_id)
-            .user_name(user_name)
-            .repository_name(repository_name)
-            .build();
+                .project_id(project_id)
+                .user_name(user_name)
+                .repository_name(repository_name)
+                .build();
     }
 }

@@ -27,4 +27,5 @@ public class FrameworkHandlerImpl implements FrameworkHandler {
     public FrameworkEntity getFrameworkEntity(String id){
         return frameworkDAO.getFramework(id);
     }
+
 }
