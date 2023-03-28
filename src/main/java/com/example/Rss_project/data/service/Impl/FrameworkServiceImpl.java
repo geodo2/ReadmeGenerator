@@ -19,10 +19,10 @@ public class FrameworkServiceImpl implements FrameworkService {
     // Service(Client) <-> Controller : DTO
     // Service <-> DAO(DB) : Entity
     @Override
-    public FrameworkDTO saveFramework(String id, String name, String content){
-        FrameworkEntity frameworkEntity = frameworkHandeler.saveFrameworkEntity(id, name, content);
+    public FrameworkDTO saveFramework(String Type, String name, String content){
+        FrameworkEntity frameworkEntity = frameworkHandeler.saveFrameworkEntity(Type, name, content);
 
-        FrameworkDTO frameworkDTO = new FrameworkDTO(frameworkEntity.getId(), frameworkEntity.getName(), frameworkEntity.getContent());
+        FrameworkDTO frameworkDTO = new FrameworkDTO(frameworkEntity.getType(), frameworkEntity.getName(), frameworkEntity.getContent());
         return frameworkDTO;
     }
 
@@ -30,7 +30,7 @@ public class FrameworkServiceImpl implements FrameworkService {
     public FrameworkDTO getFramework(String name){
         FrameworkEntity frameworkEntity = frameworkHandeler.getFrameworkEntity(name);
 
-        FrameworkDTO frameworkDTO = new FrameworkDTO(frameworkEntity.getId(), frameworkEntity.getName(), frameworkEntity.getContent());
+        FrameworkDTO frameworkDTO = new FrameworkDTO(frameworkEntity.getType(), frameworkEntity.getName(), frameworkEntity.getContent());
         return frameworkDTO;
     }
 

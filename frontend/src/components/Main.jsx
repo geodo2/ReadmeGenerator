@@ -19,8 +19,8 @@ function Main(props) {
   const readmeFileList = useState();
 
   const [file, setFile] = useState();
-  const [userName, setUserName] = useState('');
-  const [repName, setRepName] = useState('');
+  const [userName, setUserName] = useState();
+  const [repName, setRepName] = useState();
   const [githubRepLink, setGithubRepLink] = useState('');
   const [fileName, setFileName] = useState("Project Select");
   const [fileSelected, setFileSelected] = useState(false);
@@ -68,7 +68,9 @@ function Main(props) {
     formData.append('jsonParam1', userName);
     formData.append('jsonParam2', repName);
 
-    const templateList = ["Template", "Contributors"];
+    var readme_list = [];
+    const frameworkList = ["contributor", "header"];
+    const readmeObject = ["A", "B", "C", "D"];
 
     axios({
       method: "post",
@@ -77,21 +79,30 @@ function Main(props) {
     })
     .then(function (response){
       //handle success
+
+      for(var i =0; i<response.data.readmeName.length; i++){
+        readme_list.push({id: response.data.readmeName[i], content : []});
+      }
+      console.log("readme_list : ", readme_list);
       navigate('./editor', {
         state: {
-          index: 1,
-          userName: userName,
-          repName: repName
+          project_id: response.data.project_id,
+          framework_list: response.data.templateList,
+          readmeObject:readme_list
         }
       });
     })
     .catch(function(error){
       //handle error
       console.log(error);
+      for(var i =0; i<readmeObject.length; i++){
+        readme_list.push({id: readmeObject[i] , content : ["# test"]});
+      }
       navigate('./editor', {
         state: {
-          index: 1,
-          templateList:templateList
+          project_id: 12223,
+          framework_list: ["contributor", "header"],
+          readmeObject:readme_list
         }
       });
     })
@@ -104,7 +115,7 @@ function Main(props) {
       <Wrapper>
         <header id="header">
           <h1>Readme Generate</h1>
-          <p>Project의 내용을 파싱해 자동으로 Readme파일을 작성해주는 서비스 입니다.<br />
+          <p style={{backgroundColor:"transparent"}}>Project의 내용을 파싱해 자동으로 Readme파일을 작성해주는 서비스 입니다.<br />
           Github repository link 혹은 Project 파일을 업로드 해주세요</p>
         </header>
 
@@ -117,11 +128,11 @@ function Main(props) {
           <form id="generate-form-files">
             <div className="row">
               <div className="col-sm-4">
-                <input type="text" name="userName" id="user-name" defaultValue={userName} placeholder="User Name"/>
+                <input type="text" name="userName" id="user-name" defaultValue={userName} required placeholder="User Name"/>
               </div>
 
               <div className="col-sm-4">
-                <input type="text" name="repName" id="rep-name" defaultValue={repName} placeholder="Repository Name"/>
+                <input type="text" name="repName" id="rep-name" defaultValue={repName} required placeholder="Repository Name"/>
               </div>
 
             <div className="col-sm-3">

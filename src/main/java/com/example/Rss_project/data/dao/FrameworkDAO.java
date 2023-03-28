@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface FrameworkDAO  {
     FrameworkEntity saveFramework(FrameworkEntity frameworkEntity);
-    FrameworkEntity getFramework (String id);
+    FrameworkEntity getFramework (String name);
 
 
 }

@@ -3,63 +3,43 @@ import { useNavigate, useLocation  } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
-import ReadmeFileList from "./File/ReadmeFileList";
+import ReadmeFileResultList from "./File/ReadmeFileResultList";
 import ReadmeFileContent from "./File/ReadmeFileContent";
-import Controller from "./Controller/Controller";
-
 
 const Wrapper = styled.div`
     padding: 0;
     margin: 0 auto;
-    width: calc(100% - 32px);
+    min-width: 860px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 `;
-
-
 
 function Result(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const result = location.state.result; // 이전 페이지 결과 값
 
-
   const goMain = (e) =>{
     navigate('../');
   }
 
-  const submitReadme = (e) =>{
-    const formData = new FormData();
-    // hard coding
-    formData.append('mdName', "A");
-    formData.append('userName', "YeJi222");
-    formData.append('repName', "SpringBoot_RSS_Local");
+  const goBack = (e) =>{
+    navigate(-1);
+  }
 
+  const submitReadme = (e) =>{
     axios({
       method: "post",
-      url: '/markdown',
-      data: formData,
-      responseType: "text",
+      url: 'http://localhost:8090/mdZipFile',
+      data: result,
+      responseType: "arraybuffer",
       headers: {
-        'Content-Type': 'multipart/form-data'
+        "Content-Type": "application/json",
       }
     })
     .then(function (response){
-      // console.log("result : ", response.data);
-      
-      //handle success
-      /*
-      navigate('./result', {
-        state: {
-          readme: response.data,
-          userName: userName,
-          repName: repName
-        }
-      });
-      */
-
-      const blob = new Blob([response.data]);
+      const blob = new Blob([response.data], {type: "application/zip"});
       // blob 사용하여 객체 URL 생성
       const fileObjectUrl = window.URL.createObjectURL(blob);
       // blob 객체 URL을 설정할 링크 만들기
@@ -68,7 +48,7 @@ function Result(props) {
       link.style.display = "none";
 
       // 다운로드 파일 이름 지정
-      link.download = "A.md"; // 나중에 변수 쓰기
+      link.download = "mdFiles.zip";
       // 링크를 바디에 추가하고, 강제로 click 이벤트 발생시켜 파일 다운로드
       document.body.appendChild(link);
       link.click();
@@ -86,9 +66,6 @@ function Result(props) {
     });
   }
 
-
-
-
   return (
       <Wrapper>
         <header id="header">
@@ -96,13 +73,16 @@ function Result(props) {
         </header>
         <div className="row">
           <div className="col-sm-12">
-            <ReadmeFileList />
+            <ReadmeFileResultList readmeList={result} />
           </div>
           <div className="col-sm-12 calign mb-3">
-            <input type="button" className="bt-back" value="download" onClick={submitReadme} />
+            <input type="button" className="bt-down" value="Full Download" onClick={submitReadme} />
           </div>
           <div className="col-sm-12 calign mb-2">
-            <input type="button" className="bt-back" value="Back" onClick={goMain} />
+            <input type="button" className="bt-main" value="Main" onClick={goMain} />
+          </div>
+          <div className="col-sm-12 calign mb-2">
+            <input type="button" className="bt-back" value="Back" onClick={goBack} />
           </div>
         </div>
       </Wrapper>

@@ -11,4 +11,6 @@ public interface FrameworkRepository extends JpaRepository<FrameworkEntity, Stri
     @Query(value = "SELECT content FROM framework WHERE name = :name_value", nativeQuery = true)
     String findcontent(@Param("name_value")String nameValue);
 
+    @Query(value = "SELECT name FROM framework", nativeQuery = true)
+    List<String> findAllName();
 }

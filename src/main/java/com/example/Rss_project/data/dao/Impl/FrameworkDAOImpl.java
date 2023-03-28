@@ -25,8 +25,8 @@ public class FrameworkDAOImpl implements FrameworkDAO {
     }
 
     @Override
-    public FrameworkEntity getFramework(String id){
-        FrameworkEntity frameworkEntity = frameworkRepository.getReferenceById(id);
+    public FrameworkEntity getFramework(String name){
+        FrameworkEntity frameworkEntity = frameworkRepository.getReferenceById(name);
         return frameworkEntity;
     }
 

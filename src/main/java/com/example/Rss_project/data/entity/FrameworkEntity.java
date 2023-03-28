@@ -21,14 +21,14 @@ import lombok.ToString;
 @Table(name = "Framework")
 public class FrameworkEntity {
     @Id
-    String id;
     String name;
+    String Type;
     String content;
 
     public FrameworkDTO toDto(){
         return FrameworkDTO.builder()
-            .id(id)
             .name(name)
+            .Type(Type)
             .content(content)
             .build();
     }

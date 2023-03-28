@@ -5,7 +5,9 @@ import com.example.Rss_project.data.entity.ProjectEntity;
 import com.example.Rss_project.data.handler.ProjectHandler;
 import com.example.Rss_project.data.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProjectServiceImpl implements ProjectService {
     ProjectHandler projectHandler;
 

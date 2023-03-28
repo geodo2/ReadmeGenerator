@@ -15,15 +15,15 @@ import lombok.ToString;
 @Builder
 public class FrameworkDTO {
     @NotNull
-    private String id;
-    @NotNull
     private String name;
+    @NotNull
+    private String Type;
     private String content;
 
     public FrameworkEntity toEntity(){
         return FrameworkEntity.builder()
-            .id(id)
             .name(name)
+            .Type(Type)
             .content(content)
             .build();
 
