@@ -16,19 +16,16 @@ const Wrapper = styled.div`
     justify-content: center;
 `;
 
-
 function ReadmeFileContent(props) {
   const navigate = useNavigate();
   const position = props.position;
   const setPosition= props.setPosition;
 
   const changePosition = props.changePosition;
-
-
   const content = props.content.content;
   const changeTextArea = props.changeTextArea;
+  const changePeriod = props.changePeriod;
   const deleteContent = props.deleteContent;
-
 
   const title = props.title;
   const list = [""];
@@ -38,10 +35,11 @@ function ReadmeFileContent(props) {
     setPosition(e.target.value);
   }
 
-
   //initial make content List
+
   for(var i = 0; i< content.length; i++){
     var cur_content = "";
+
     if(content[i].includes("empty_textarea")){
       cur_content =  <textarea
           placeholder="여기에 입력하세요"
@@ -52,7 +50,13 @@ function ReadmeFileContent(props) {
           wrap="hard"
         ></textarea>;
 
-    }else{
+    } else if(content[i].includes("https://ifh.cc") || content[i].includes("PeriodImage")){
+      cur_content = <div>
+        <div className="dateBox" >Start date : <input type="date" data-placeholder="날짜 선택" id={"period_start" + i} onChange={changePeriod} name={i}></input></div>
+        <div className="brCSS"></div>
+        <div className="dateBox" >End date : <input type="date" data-placeholder="날짜 선택" id={"period_end" + i} name={i} onChange={changePeriod}></input></div>
+      </div>;
+    } else{
       cur_content = content[i];
     }
 
@@ -62,7 +66,7 @@ function ReadmeFileContent(props) {
         .use(html)
         .processSync(content[i]).toString();
 
-    temp = temp +"\n" +content[i] ;
+    temp = temp +"\n" + content[i];
 
     if( Number(i) === Number(position)-1){
       list.push(
@@ -113,8 +117,6 @@ function ReadmeFileContent(props) {
     }
   }
 
-
-
   return (
       <Wrapper>
         <div className="contentDiv mb-2">
@@ -131,7 +133,7 @@ function ReadmeFileContent(props) {
               color: "black !important"
             }}
             source={temp}
-          / >
+          />
         </div>
       </Wrapper>
   );
