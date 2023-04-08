@@ -18,6 +18,10 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class UnzipController {
@@ -362,5 +366,25 @@ public class UnzipController {
         frame_content= frame_content.replace("repositoryName",repo_name);
 
         return frame_content;
+    }
+
+    @GetMapping("/social")
+    public String alldata() throws IOException {
+        // 여기서 사용자가 누구인지 index값으로 알아내기
+        String test= "123";
+        // 크롤링할 웹 페이지 URL
+        String url = "https://github.com/geodo2";
+
+// Jsoup을 이용하여 웹 페이지 HTML 문서 가져오기
+        Document doc = Jsoup.connect(url).get();
+
+// 웹 페이지에서 헤드라인 뉴스 제목 요소들을 추출하기
+
+        Elements elements = doc.getElementsByClass("vcard-details");
+// 헤드라인 뉴스 제목들 출력하기
+        for (Element headline : elements) {
+            System.out.println(headline.text());
+        }
+        return test;
     }
 }
