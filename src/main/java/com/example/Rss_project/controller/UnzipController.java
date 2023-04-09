@@ -370,21 +370,45 @@ public class UnzipController {
 
     @GetMapping("/social")
     public String alldata() throws IOException {
-        // 여기서 사용자가 누구인지 index값으로 알아내기
         String test= "123";
-        // 크롤링할 웹 페이지 URL
-        String url = "https://github.com/geodo2";
-
-// Jsoup을 이용하여 웹 페이지 HTML 문서 가져오기
+        String url = "https://github.com/othneildrew";
+        String[] social_link = {"instagram", "facebook", "linkedin", "notion", "twitter", "github", "gmail"};
+        String social_data = " ";
         Document doc = Jsoup.connect(url).get();
 
-// 웹 페이지에서 헤드라인 뉴스 제목 요소들을 추출하기
-
-        Elements elements = doc.getElementsByClass("vcard-details");
-// 헤드라인 뉴스 제목들 출력하기
-        for (Element headline : elements) {
-            System.out.println(headline.text());
+        String parse = "<a href=\"instagram_Link\"><img src=\"https://img.shields.io/badge/Instagram-E4405F?style=flat-square&logo=Instagram&logoColor=white\"/></a>Flag\n" +
+                "<a href=\"facebook_Link\"><img src=\"https://img.shields.io/badge/Facebook-1877F2?style=flat-square&logo=Facebook&logoColor=white\"/></a>Flag\n" +
+                "<a href=\"linkedin_Link\"><img src=\"https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=LinkedIn&logoColor=white\"/></a>Flag\n" +
+                "<a href=\"notion_Link\"><img src=\"https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white\"/></a>Flag\n" +
+                "<a href=\"twitter_Link\"><img src=\"https://img.shields.io/badge/Twitter-1DA1F2?style=flat-square&logo=Twitter&logoColor=white\"/></a>Flag\n" +
+                "<a href=\"github_Link\"><img src=\"https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white\"/></a>Flag\n" +
+                "<a href=\"gmail_Link\"><img src=\"https://img.shields.io/badge/Gmail-F06B66?style=flat-square&logo=Gmail&logoColor=white\"/></a>\n" +
+                "\n";
+        String[] parsedata= parse.split("Flag");
+        for (int i = 0; i < parsedata.length; i++) {
+            System.out.println(parsedata[i]);
         }
-        return test;
+        Elements elements = doc.getElementsByClass("vcard-details");
+
+
+        for (Element headline : elements) {
+            String[] urlparsing=headline.text().split(" ");
+            for (int i = 0; i < urlparsing.length; i++) {
+                System.out.println(urlparsing[i]);
+                for( int j = 0; j< parsedata.length; j++){
+                    if(urlparsing[i].contains(social_link[j])){
+                        String temp= social_link[j]+"_Link";
+                        System.out.println(temp + urlparsing[i]);
+                        parsedata[j]=parsedata[j].replace(temp, urlparsing[i]);
+                        social_data +=parsedata[j];
+                    }
+                }
+
+            }
+
+            System.out.println(headline.text()+ "test");
+            System.out.println(social_data+ "test");
+        }
+        return social_data;
     }
 }
