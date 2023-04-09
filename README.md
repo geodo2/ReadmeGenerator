@@ -50,6 +50,10 @@ sdk install spring boot
     List<Person> findByAgeGreaterThanEqualOrderByAgeAsc(int age);
 }
 ```
-
-
-
+<a href="https://github.com/geodo2"><img src="https://img.shields.io/badge/Instagram-E4405F?style=flat-square&logo=Instagram&logoColor=white"/></a>
+<a href="https://github.com/geodo2"><img src="https://img.shields.io/badge/Facebook-1877F2?style=flat-square&logo=Facebook&logoColor=white"/></a>
+<a href="https://github.com/geodo2"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=LinkedIn&logoColor=white"/></a>
+<a href="https://github.com/geodo2"><img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white"/></a>
+<a href="https://github.com/geodo2"><img src="https://img.shields.io/badge/Twitter-1DA1F2?style=flat-square&logo=Twitter&logoColor=white"/></a>
+<a href="https://github.com/geodo2"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
+<a href="https://github.com/geodo2"><img src="https://img.shields.io/badge/Gmail-F06B66?style=flat-square&logo=Gmail&logoColor=white"/></a>
