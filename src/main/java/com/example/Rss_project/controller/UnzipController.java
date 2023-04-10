@@ -411,4 +411,34 @@ public class UnzipController {
         }
         return social_data;
     }
+
+    @GetMapping("/socialtest")
+    public String socialdata() throws IOException {
+        String test= "123";
+        String url = "https://github.com/Devdachan";
+        String[] social_link = {"instagram", "facebook", "linkedin", "notion", "twitter", "github", "gmail"};
+        String[] logo_color = {"E4405F","1877F2","0A66C2","000000","1DA1F2","181717","F06B66" };
+        String social_data = " ";
+        String social_temp ="<a href=\"social_Link\"><img src=\"https://img.shields.io/badge/social-logo_color?style=flat-square&logo=social&logoColor=white\"/></a>";
+        Document doc = Jsoup.connect(url).get();
+        Elements elements = doc.getElementsByClass("vcard-details");
+        for (Element headline : elements) {
+            String[] urlparsing=headline.text().split(" ");
+            for (int i = 0; i < urlparsing.length; i++) {
+                System.out.println(urlparsing[i]);
+                for( int j = 0; j< social_link.length; j++){
+                    if(urlparsing[i].contains(social_link[j])){
+                        String temp= social_link[j]+"_Link";
+                        System.out.println(temp + urlparsing[i]);
+                        String temp_data=" ";
+                        temp_data=social_temp.replace("logo_color",logo_color[j]);
+                        temp_data=temp_data.replace("social",social_link[j]);
+                        temp_data=temp_data.replace(temp, urlparsing[i]);
+                        social_data +=temp_data;
+                    }
+                }
+            }
+        }
+        return social_data;
+    }
 }
